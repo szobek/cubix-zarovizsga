@@ -15,7 +15,7 @@ export class AuthService {
     this.loadUser()
   }
 
-  register(email: string, password: string): void {
+  register(name: string, email: string, password: string): void {
     const registeredUsers=JSON.parse(localStorage.getItem(this._registeredUsersKey) || '[]');
     const userExists=registeredUsers.some((user: { email: string }) => user.email === email);
     if (userExists) {
@@ -23,7 +23,7 @@ export class AuthService {
     } else {
       const newUser:User={
         id: this.uuidv4(),
-        name: '',
+        name,
         email,
         password,
       };

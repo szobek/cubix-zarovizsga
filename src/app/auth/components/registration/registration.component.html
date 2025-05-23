@@ -8,6 +8,13 @@
             <form [formGroup]="registrationForm">
 
                 <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input type="text" matInput formControlName="name">
+                </mat-form-field>
+                @if(registrationForm.controls['name'].errors?.['required'] && registrationForm.controls['name'].touched){
+                <mat-error>The name is required</mat-error>
+                }
+                <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input type="text" matInput formControlName="email">
                 </mat-form-field>

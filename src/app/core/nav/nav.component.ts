@@ -3,13 +3,16 @@ import { MatIconButton } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../auth/components/auth.service';
+import { RouterModule } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'czv-nav',
   imports: [
     MatIconButton,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule,
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'

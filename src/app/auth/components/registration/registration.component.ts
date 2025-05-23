@@ -24,7 +24,7 @@ import { RouterModule } from '@angular/router';
 export class RegistrationComponent {
   authService:AuthService=inject(AuthService);
  registrationForm:FormGroup= new FormGroup({
-    name: new FormControl(),
+    name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -34,7 +34,7 @@ export class RegistrationComponent {
   register() {
     if (this.registrationForm.valid) {
       const formData = this.registrationForm.value;
-     this.authService.register(formData.email, formData.password);
+     this.authService.register(formData.name,formData.email, formData.password);
    
     } else {
       console.log('Form is invalid');
