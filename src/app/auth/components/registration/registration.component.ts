@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { confirmPasswordValidator } from '../../confirm-password.validator';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'czv-registration',
@@ -19,6 +20,7 @@ import { confirmPasswordValidator } from '../../confirm-password.validator';
   styleUrl: './registration.component.scss'
 })
 export class RegistrationComponent {
+  authService:AuthService=inject(AuthService);
  registrationForm:FormGroup= new FormGroup({
     name: new FormControl(),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -29,10 +31,9 @@ export class RegistrationComponent {
  
   register() {
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
-      if (this.registrationForm.value.password !== this.registrationForm.value.confirmPassword) {
-        console.log('Passwords do not match');
-      }
+      const formData = this.registrationForm.value;
+     this.authService.register(formData.email, formData.password);
+   
     } else {
       console.log('Form is invalid');
     }

@@ -11,19 +11,30 @@
                     <mat-label>Email</mat-label>
                     <input type="text" matInput formControlName="email">
                 </mat-form-field>
+                @if(registrationForm.controls['email'].errors?.['required'] && registrationForm.controls['email'].touched){
+                <mat-error>The email is required</mat-error>
+                }
 
                 <mat-form-field appearance="outline">
                     <mat-label>Password</mat-label>
                     <input type="password" matInput formControlName="password">
                 </mat-form-field>
-
+                @if(registrationForm.controls['password'].errors?.['required'] && registrationForm.controls['password'].touched){
+                <mat-error>The password is required</mat-error>
+                }
+                @if (registrationForm.controls['password'].errors?.['minlength'] && registrationForm.controls['password'].touched) {
+                <mat-error>The password must be at least {{ registrationForm.controls['password'].errors!['minlength'].requiredLength }} characters long</mat-error>
+                }
 
                 <mat-form-field appearance="outline">
                     <mat-label>Password confirmation</mat-label>
                     <input type="password" matInput formControlName="confirmPassword">
                 </mat-form-field>
-                @if(registrationForm.errors?.['PasswordNoMatch']){
-                <mat-error>the confirmPassword does not match the password</mat-error>
+                @if(registrationForm.errors?.['PasswordNoMatch'] && registrationForm.controls['confirmPassword'].touched){
+                <mat-error>the confirm Password does not match the password</mat-error>
+                }
+                @if(registrationForm.controls['confirmPassword'].errors?.['required'] && registrationForm.controls['password'].touched){
+                <mat-error>The confirmPassword is required</mat-error>
                 }
 
             </form>
