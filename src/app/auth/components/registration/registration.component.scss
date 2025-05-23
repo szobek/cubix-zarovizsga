@@ -5,4 +5,8 @@ mat-card {
     width: 70%;
     margin: 0 auto;
     padding: 0 30px;
+    mat-card-actions{
+        display: flex;
+        justify-content: space-between;
+    }
 }

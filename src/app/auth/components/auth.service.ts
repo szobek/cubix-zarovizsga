@@ -17,7 +17,13 @@ export class AuthService {
     if (userExists) {
       alert('User already exists');
     } else {
-      registeredUsers.push({ email, password });
+      const newUser:User = {
+        id: this.uuidv4(),
+        name: '',
+        email,
+        password,
+      };
+      registeredUsers.push(newUser);
       localStorage.setItem(this._registeredUsersKey, JSON.stringify(registeredUsers));
       this.router.navigate(['/login']);
 
@@ -31,6 +37,7 @@ export class AuthService {
     if (user) {
       this.router.navigate(['/covid-info']);
       this.user = user;
+
     } else {
       alert('Invalid email or password');
     }
@@ -40,6 +47,23 @@ export class AuthService {
     this.user = null;
     this.router.navigate(['/login']);
   }
+
+  loadUser(): void {
+    const registeredUsers = JSON.parse(localStorage.getItem(this._registeredUsersKey) || '[]');
+    const user = registeredUsers.find((user: { email: string }) => user.email === this.user?.email);
+
+    if (user) {
+      this.user = user;
+    } else {
+      this.user = null;
+    }
+  }
+
+ private uuidv4() {
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+  );
+}
 
 
 }

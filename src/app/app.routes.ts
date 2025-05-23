@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './auth/components/auth.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'covid-info', pathMatch: 'full'},    
@@ -6,6 +7,7 @@ export const routes: Routes = [
     {path:'registration', loadComponent: () => import('./auth/components/registration/registration.component').then(m => m.RegistrationComponent)},
     {
         path: 'covid-info',
+        canActivate: [authGuard],
         loadChildren: () => import('./covid-info/covid-info.routes').then(m => m.covidInfoRoutes),
     }
 ];

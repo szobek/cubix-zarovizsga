@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { confirmPasswordValidator } from '../../confirm-password.validator';
 import { AuthService } from '../auth.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'czv-registration',
@@ -15,6 +16,7 @@ import { AuthService } from '../auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    RouterModule
   ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss'
