@@ -36,12 +36,10 @@ export class AuthService {
   login(email: string, password: string): void {
     const registeredUsers=JSON.parse(localStorage.getItem(this._registeredUsersKey) || '[]');
     const user=registeredUsers.find((user: { email: string; password: string }) => user.email === email && user.password === password);
-
     if (user) {
       this.router.navigate(['/covid-info']);
       this.user=user;
       localStorage.setItem(this._currentUserKey, JSON.stringify(user));
-
     } else {
       alert('Invalid email or password');
     }
