@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth/components/auth.guard';
+import { GraphiconComponent } from './covid-info/components/graphicon/graphicon.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'covid-info', pathMatch: 'full'},    
+    {path:'chart', component:GraphiconComponent},
     {path:'modify-profile', loadComponent: () => import('./auth/components/modify/modify.component').then(m => m.ModifyComponent)},
     {path: 'login', loadComponent: () => import('./auth/components/login/login.component').then(m => m.LoginComponent)},
     {path:'registration', loadComponent: () => import('./auth/components/registration/registration.component').then(m => m.RegistrationComponent)},
