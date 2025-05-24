@@ -20,7 +20,7 @@ export class AuthService {
       localStorage.getItem(this._registeredUsersKey) || '[]'
     );
     const userExists=registeredUsers.some(
-      (user: { email: string }) => user.email === email
+      (user: { email: string }) => user.email===email
     );
     if (userExists) {
       alert('User already exists');
@@ -46,7 +46,7 @@ export class AuthService {
     );
     const user=registeredUsers.find(
       (user: { email: string; password: string }) =>
-        user.email === email && user.password === password
+        user.email===email&&user.password===password
     );
     if (user) {
       this.router.navigate(['/covid-info']);
@@ -88,9 +88,9 @@ export class AuthService {
         localStorage.getItem(this._registeredUsersKey) || '[]'
       );
       const userIndex=registeredUsers.findIndex(
-        (user: { id: string }) => user.id === this.user?.id
+        (user: { id: string }) => user.id===this.user?.id
       );
-      if (userIndex !== -1) {
+      if (userIndex!==-1) {
         registeredUsers[userIndex]=this.user;
         localStorage.setItem(
           this._registeredUsersKey,

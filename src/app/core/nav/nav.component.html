@@ -1,10 +1,8 @@
 @if(authService.user){
-
   <mat-toolbar>
     <span class="cursor">
       <img src="covid.svg" alt="" width="50" routerLink="/">
     </span>
-    
     <div routerLink="modify-profile" class="cursor">{{authService.user.name}}</div>
     <button mat-icon-button (click)="authService.logout()" >
       <mat-icon>logout</mat-icon>
