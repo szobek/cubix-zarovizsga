@@ -19,7 +19,7 @@
             </table>
         }
         <select name="country" id="" [(ngModel)]="selectedCountry" (ngModelChange)="onCountryChange($event)">
-            <option value="">Select a country</option>
+            @if(selectedCountry===''){ <option value="">Select a country</option>}
             @for(country of countries;track country){
                 <option value="{{country}}">{{country}}</option>
             }
