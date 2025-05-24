@@ -1,7 +1,30 @@
 mat-toolbar{
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
+    .nav-container{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .nav-links{
+            ul{
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                list-style: none;
+            }
+           
+        }
+    }
     .cursor{
         cursor: pointer;
+    }
+    .auth{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        small{
+            font-size: 10px;
+        }
     }
 }

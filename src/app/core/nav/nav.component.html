@@ -1,11 +1,20 @@
 @if(authService.user){
-  <mat-toolbar>
+<mat-toolbar>
+  <div class="nav-container">
     <span class="cursor">
       <img src="covid.svg" alt="" width="50" routerLink="/">
     </span>
-    <div routerLink="modify-profile" class="cursor">{{authService.user.name}}</div>
-    <button mat-icon-button (click)="authService.logout()" >
+      <div class="nav-links">
+        <ul>
+          <li class="cursor" routerLink="/chart">Chart</li>
+        </ul>
+      </div>
+  </div>
+  <div class="auth">
+    <div routerLink="modify-profile" class="cursor">{{authService.user.name}} <small>modify</small></div>
+    <button mat-icon-button (click)="authService.logout()">
       <mat-icon>logout</mat-icon>
     </button>
-  </mat-toolbar>
+  </div>
+</mat-toolbar>
 }
