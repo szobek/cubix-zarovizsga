@@ -5,6 +5,10 @@ import { CovidCallService } from '../../services/covid-call.service';
 import { tap } from 'rxjs';
 import { CovidData } from '../../models/CovidData.model';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../auth/auth.service';
+
+
+
 @Component({
   selector: 'czv-graphicon',
   imports: [HighchartsChartModule, FormsModule],
@@ -13,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class GraphiconComponent {
   covidCallService: CovidCallService = inject(CovidCallService);
+  authService:AuthService=inject(AuthService);
   state = {
     countries: [
       'Hungary',
@@ -69,6 +74,7 @@ export class GraphiconComponent {
       .getCovidData($event)
       .pipe(
         tap((data: CovidData) => {
+          this.authService.increaseUsedAPI()
           this.chartOptions.series = [
             {
               name: 'Updated Covid Data',

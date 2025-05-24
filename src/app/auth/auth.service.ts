@@ -30,6 +30,7 @@ export class AuthService {
         name,
         email,
         password,
+        usedAPI: 0,
       };
       registeredUsers.push(newUser);
       localStorage.setItem(
@@ -50,7 +51,9 @@ export class AuthService {
     );
     if (user) {
       this.router.navigate(['/covid-info']);
+      user.usedAPI=0;
       this.user=user;
+
       localStorage.setItem(this._currentUserKey, JSON.stringify(user));
     } else {
       alert('Invalid email or password');
@@ -72,6 +75,13 @@ export class AuthService {
     }
   }
 
+  increaseUsedAPI(): void {
+    this.user!.usedAPI++;
+    localStorage.setItem(this._currentUserKey, JSON.stringify(this.user));
+    if (this.user!.usedAPI>=3) {
+      this.logout()
+    }
+  }
   private uuidv4() {
     return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
       (

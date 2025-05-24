@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
 import { CovidData } from '../../models/CovidData.model';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AuthService } from '../../../auth/auth.service';
 @Component({
   selector: 'czv-home',
   imports: [
@@ -15,11 +16,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 })
 export class HomeComponent {
   covidCallService: CovidCallService=inject(CovidCallService);
-  countries: string[] = ['Hungary', 'Slovakia', 'Slovenia', 'France', 'Austria','Romania'];
-  selectedCountry: string = '';
+  authService:AuthService=inject(AuthService);
+  countries: string[]=['Hungary', 'Slovakia', 'Slovenia', 'France', 'Austria','Romania'];
+  selectedCountry: string='';
   loader: boolean = false;
   onCountryChange($event: any) {
-    const country = $event;
+    const country=$event;
     if(country===""){
       return
     }
@@ -27,15 +29,15 @@ export class HomeComponent {
     this.covidCallService.getCovidData(country)
     .pipe(
       tap((data:CovidData)=>{
+        this.authService.increaseUsedAPI()
+        if(localStorage.getItem('usedAPI')===null){}
         document.title = `Covid data for ${country}`;
         document.querySelector('.country')!.textContent=country;
         document.querySelector('.deaths')!.textContent=data.deaths.toString();
         document.querySelector('.confirmed')!.textContent=data.confirmed.toString();
-        console.log(`Covid data for ${country}`, data);
-        
         }),
         finalize(() => {
-          this.loader = false;
+          this.loader=false;
         })
     )
     .subscribe()
