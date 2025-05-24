@@ -1,12 +1,46 @@
-import { Component } from '@angular/core';
-import { NavComponent } from "../../../core/nav/nav.component";
-
+import { Component, inject } from '@angular/core';
+import { CovidCallService } from '../../services/covid-call.service';
+import { FormsModule } from '@angular/forms';
+import { finalize, tap } from 'rxjs/operators';
+import { CovidData } from '../../models/CovidData.model';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @Component({
   selector: 'czv-home',
-  imports: [NavComponent],
+  imports: [
+    FormsModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  covidCallService: CovidCallService=inject(CovidCallService);
+  countries: string[] = ['Hungary', 'Slovakia', 'Slovenia', 'France', 'Austria','Romania'];
+  selectedCountry: string = '';
+  loader: boolean = false;
+  onCountryChange($event: any) {
+    const country = $event;
+    if(country===""){
+      return
+    }
+    this.loader = true;
+    this.covidCallService.getCovidData(country)
+    .pipe(
+      tap((data:CovidData)=>{
+        document.title = `Covid data for ${country}`;
+        document.querySelector('.country')!.textContent=country;
+        document.querySelector('.deaths')!.textContent=data.deaths.toString();
+        document.querySelector('.confirmed')!.textContent=data.confirmed.toString();
+        console.log(`Covid data for ${country}`, data);
+        
+        }),
+        finalize(() => {
+          this.loader = false;
+        })
+    )
+    .subscribe()
+  
+  }
+
 
 }

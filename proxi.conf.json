@@ -1,0 +1,7 @@
+{
+    "/cases": {
+        "target": "https://europe-central2-webuni-js-covid-exam.cloudfunctions.net",
+        "secure": true,
+        "changeOrigin": true
+    }
+}

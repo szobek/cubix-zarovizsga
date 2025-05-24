@@ -1,0 +1,27 @@
+@if(loader){
+    <mat-spinner></mat-spinner>
+}
+    <div>
+        @if(selectedCountry){
+            <table  >
+                <thead>
+                    <th >Country</th>
+                    <th>Deaths</th>
+                    <th>Confirmed</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="country"></td>
+                        <td class="deaths"></td>
+                        <td class="confirmed"></td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        <select name="country" id="" [(ngModel)]="selectedCountry" (ngModelChange)="onCountryChange($event)">
+            <option value="">Select a country</option>
+            @for(country of countries;track country){
+                <option value="{{country}}">{{country}}</option>
+            }
+        </select>
+    </div>
