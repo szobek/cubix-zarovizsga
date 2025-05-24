@@ -1,0 +1,14 @@
+<div class="idcard">
+    <div class="idcard-header">
+        <h2 class="idcard-title">Modify User</h2>
+    </div>
+    <div class="idcard-body">
+        <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="name" formControlName="name">
+            </mat-form-field>
+            <button type="submit" mat-raised-button>Save</button>
+        </form>
+    </div>
+</div>
