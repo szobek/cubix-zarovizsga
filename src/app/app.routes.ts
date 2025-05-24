@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './auth/components/auth.guard';
+import { authGuard } from './auth/auth.guard';
 import { GraphiconComponent } from './covid-info/components/graphicon/graphicon.component';
 
 export const routes: Routes = [

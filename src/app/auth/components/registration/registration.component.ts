@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { confirmPasswordValidator } from '../../confirm-password.validator';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
