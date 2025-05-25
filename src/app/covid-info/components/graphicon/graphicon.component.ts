@@ -7,18 +7,32 @@ import { CovidData } from '../../models/CovidData.model';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../auth/auth.service';
 import 'highcharts/modules/accessibility';
+import { NgForOf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
-
+interface GraphiconState {
+  countries: string[];  
+  selectedCountry: string;
+  loader: boolean;  
+  updateFlag: boolean;
+}
 @Component({
   selector: 'czv-graphicon',
-  imports: [HighchartsChartModule, FormsModule],
+  imports: [
+    HighchartsChartModule, 
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    NgForOf
+  ],
   templateUrl: './graphicon.component.html',
   styleUrl: './graphicon.component.scss',
 })
 export class GraphiconComponent {
   covidCallService: CovidCallService = inject(CovidCallService);
   authService:AuthService=inject(AuthService);
-  state = {
+  state:GraphiconState={
     countries: [
       'Hungary',
       'Slovakia',
@@ -29,6 +43,7 @@ export class GraphiconComponent {
     ],
     selectedCountry: '',
     loader: false,
+    updateFlag:  true
   };
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {
@@ -68,7 +83,6 @@ export class GraphiconComponent {
       },
     ],
   };
-  updateFlag: boolean = true;
   onCountryChange($event: any) {
     this.covidCallService
       .getCovidData($event)
@@ -82,7 +96,7 @@ export class GraphiconComponent {
               type: 'column',
             },
           ];
-          this.updateFlag = true;
+          this.state.updateFlag = true;
         })
       )
       .subscribe();
