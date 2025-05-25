@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 import { CovidCallService } from '../../services/covid-call.service';
 import { FormsModule } from '@angular/forms';
 import { finalize, tap } from 'rxjs/operators';
@@ -11,11 +11,11 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgForOf } from '@angular/common';
 
 interface HomeState {
-  countries: string[];
-  loader: boolean;
-  dataSource: CovidData[];
-  displayedColumns: string[];
-  selectedCountry: string;
+  countries: Signal<string[]>;
+  displayedColumns: Signal<string[]>;
+  loader: WritableSignal<boolean>;
+  dataSource: WritableSignal<CovidData[]>;
+  selectedCountry: WritableSignal<string>;
 }
 @Component({
   selector: 'czv-home',
@@ -35,25 +35,25 @@ export class HomeComponent {
   authService:AuthService=inject(AuthService);
 
   state:HomeState={
-    "countries": ['Hungary', 'Slovakia', 'Slovenia', 'France', 'Austria','Romania'],
-    "loader": false,
-    "dataSource": [] ,
-    "displayedColumns": ['country', 'confirmed','deaths'],
-    "selectedCountry":''
+    "countries": signal(['Hungary', 'Slovakia', 'Slovenia', 'France', 'Austria','Romania']),
+    "displayedColumns": signal(['country', 'confirmed','deaths']),
+    "loader": signal(false),
+    "dataSource": signal([]) ,
+    "selectedCountry":signal('')
   }
   onCountryChange($event: any) {
     const country=$event;
     if(country===""){return}
-    this.state.loader=true;
+    this.state.loader.set(true);
     this.covidCallService.getCovidData(country)
     .pipe(
       tap((data:CovidData)=>{
         this.authService.increaseUsedAPI()
         if(localStorage.getItem('usedAPI')===null){}
-        this.state.dataSource=[data]; 
+        this.state.dataSource.set([data]); 
         }),
         finalize(() => {
-          this.state.loader=false;
+          this.state.loader.set(false);
         })
     )
     .subscribe()

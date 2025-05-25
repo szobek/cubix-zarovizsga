@@ -1,4 +1,4 @@
-@if(state.loader){
+@if(state.loader()){
 <div class="loader">
     <mat-spinner></mat-spinner>
 </div>
@@ -11,15 +11,15 @@
     <mat-form-field>
         <mat-label>Country</mat-label>
         <mat-select [(value)]="state.selectedCountry" (selectionChange)="onCountryChange($event.value)">
-            <mat-option *ngFor="let country of state.countries" [value]="country">
+            <mat-option *ngFor="let country of state.countries()" [value]="country">
                 {{country}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    @if(state.selectedCountry!==''){
+    @if(state.selectedCountry()!==''){
 
-    <table mat-table [dataSource]="state.dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="state.dataSource()" class="mat-elevation-z8">
 
 
         <ng-container matColumnDef="country">
@@ -38,8 +38,8 @@
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="state.displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: state.displayedColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="state.displayedColumns()"></tr>
+        <tr mat-row *matRowDef="let row; columns: state.displayedColumns();"></tr>
     </table>
 
     }
