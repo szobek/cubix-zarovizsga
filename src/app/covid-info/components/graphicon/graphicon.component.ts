@@ -6,7 +6,7 @@ import { tap } from 'rxjs';
 import { CovidData } from '../../models/CovidData.model';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../auth/auth.service';
-
+import 'highcharts/modules/accessibility';
 
 
 @Component({
