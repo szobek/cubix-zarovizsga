@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, Signal, WritableSignal } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
 import { CovidCallService } from '../../services/covid-call.service';
@@ -10,12 +10,13 @@ import 'highcharts/modules/accessibility';
 import { NgForOf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface GraphiconState {
-  countries: string[];  
-  selectedCountry: string;
-  loader: boolean;  
-  updateFlag: boolean;
+  countries: Signal<string[]>;  
+  selectedCountry: WritableSignal<string> ;
+  loader: WritableSignal<boolean> ;  
+  updateFlag: WritableSignal<boolean> ;
 }
 @Component({
   selector: 'czv-graphicon',
@@ -24,6 +25,7 @@ interface GraphiconState {
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     NgForOf
   ],
   templateUrl: './graphicon.component.html',
@@ -33,17 +35,17 @@ export class GraphiconComponent {
   covidCallService: CovidCallService = inject(CovidCallService);
   authService:AuthService=inject(AuthService);
   state:GraphiconState={
-    countries: [
+    countries: signal([
       'Hungary',
       'Slovakia',
       'Slovenia',
       'France',
       'Austria',
       'Romania',
-    ],
-    selectedCountry: '',
-    loader: false,
-    updateFlag:  true
+    ]),
+    selectedCountry: signal(''),
+    loader: signal(false),
+    updateFlag:  signal(true)
   };
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {
@@ -96,7 +98,7 @@ export class GraphiconComponent {
               type: 'column',
             },
           ];
-          this.state.updateFlag = true;
+          this.state.updateFlag.set(true) 
         })
       )
       .subscribe();

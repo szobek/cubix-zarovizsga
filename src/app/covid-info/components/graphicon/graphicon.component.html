@@ -1,4 +1,10 @@
-@if(state.selectedCountry !== ''){
+@if(state.loader()){
+<div class="loader">
+    <mat-spinner></mat-spinner>
+</div>
+}
+
+@if(state.selectedCountry() !== ''){
 <div>
 
     <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" [(update)]="state.updateFlag"
@@ -12,7 +18,7 @@
     <mat-form-field>
         <mat-label>Country</mat-label>
         <mat-select [(value)]="state.selectedCountry" (selectionChange)="onCountryChange($event.value)">
-            <mat-option *ngFor="let country of state.countries" [value]="country">
+            <mat-option *ngFor="let country of state.countries()" [value]="country">
                 {{country}}
             </mat-option>
         </mat-select>
